@@ -11,6 +11,7 @@ import javafx.util.Duration;
 
 public class Main extends Application
 {
+
     public static ObservableList<Node> child;
     //
     private static final String title = "JellyBeanci Boids";
@@ -26,10 +27,22 @@ public class Main extends Application
         Pane root = new Pane();
         child = root.getChildren();
         //
-        Boid boid = new Boid();
-        child.addAll(boid.getNode());
+        for (int i = 0; i < 20; i++)
+        {
+            new Boid(Utils.getRandom(width), Utils.getRandom(height));
+        }
+        for (Boid boid : Boid.boids)
+        {
+            child.add(boid.getNode());
+        }
 
         //
+        root.setOnMouseMoved(e -> {
+            for (Boid boid : Boid.boids)
+            {
+                boid.setTarget(e.getSceneX(), e.getSceneY());
+            }
+        });
         root.setOnKeyPressed(e -> {
             switch (e.getCode())
             {
@@ -53,17 +66,14 @@ public class Main extends Application
                 }
                 case UP:
                 {
-                    boid.applyForce();
                     break;
                 }
                 case LEFT:
                 {
-                    boid.turnLeft();
                     break;
                 }
                 case RIGHT:
                 {
-                    boid.turnRight();
                     break;
                 }
 
@@ -77,7 +87,10 @@ public class Main extends Application
         update = new Timeline(new KeyFrame(Duration.millis(16), e -> {
             //60 fps
             //System.out.println("loop test");
-            boid.update();
+            for (Boid boid: Boid.boids)
+            {
+                boid.update();
+            }
         }));
         update.setCycleCount(Timeline.INDEFINITE);
         update.setRate(1);
@@ -86,7 +99,7 @@ public class Main extends Application
         //
         stage.setTitle(title);
         stage.setResizable(false);
-        stage.setScene(new Scene(root, width - 10, height - 10,backcolor));
+        stage.setScene(new Scene(root, width - 10, height - 10, backcolor));
         stage.show();
         root.requestFocus();
     }

@@ -19,7 +19,6 @@
 
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
