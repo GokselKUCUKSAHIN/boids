@@ -1,6 +1,7 @@
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.StrokeType;
 
 public class Boid extends Group
 {
@@ -30,8 +31,13 @@ public class Boid extends Group
     }
     private void draw()
     {
-        Circle pnt = new Circle(0, 0, 25, Color.SNOW);
-        this.getChildren().add(pnt);
+        Polygon triangle = new Polygon(new double[]{0, -30, -11, 0, 11, 0});
+        triangle.setFill(Color.color(0.76, 0.76, 0.76));
+        triangle.setStroke(Color.color(0.17, 0.17, 0.17));
+        triangle.setStrokeType(StrokeType.CENTERED);
+        triangle.setStrokeWidth(1.4);
+        //Circle pnt = new Circle(0, 0, 25, Color.SNOW);
+        this.getChildren().add(triangle); //pnt
         this.layoutXProperty().bind(pos.x);
         this.layoutYProperty().bind(pos.y);
     }

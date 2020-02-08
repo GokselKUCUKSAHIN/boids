@@ -29,9 +29,6 @@ public class Main extends Application
         Boid bd = new Boid();
         child.addAll(bd);
 
-
-
-
         //
         root.setOnKeyPressed(e -> {
             switch (e.getCode())
