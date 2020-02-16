@@ -182,16 +182,16 @@ public class Vec2D
         return new Vec2D(v1.x.get() - v2.x.get(), v1.y.get() - v2.y.get());
     }
 
-    public Vec2D division(double dx, double dy)
+    public Vec2D divide(double dx, double dy)
     {
         this.x.set(this.x.get() / dx);
         this.y.set(this.y.get() / dy);
         return this;
     }
 
-    public Vec2D division(double divider)
+    public Vec2D divide(double divider)
     {
-        return division(divider, divider);
+        return divide(divider, divider);
     }
 
     public Vec2D multiply(double mx, double my)

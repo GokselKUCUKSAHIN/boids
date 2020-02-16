@@ -11,6 +11,7 @@ import javafx.util.Duration;
 
 public class Main extends Application
 {
+
     public static ObservableList<Node> child;
     //
     private static final String title = "JellyBeanci";
@@ -20,15 +21,18 @@ public class Main extends Application
 
     private static Timeline update;
 
+
     @Override
     public void start(Stage stage) throws Exception
     {
         Pane root = new Pane();
         child = root.getChildren();
         //
-        Boid bd = new Boid();
-        child.addAll(bd);
-
+        Flock flock = new Flock();
+        for (Boid boid : Flock.boids)
+        {
+            child.add(boid);
+        }
         //
         root.setOnKeyPressed(e -> {
             switch (e.getCode())
@@ -51,22 +55,20 @@ public class Main extends Application
                     System.out.println("Child Count: " + child.size());
                     break;
                 }
-                case R:
+                case F4:
                 {
-                    bd.update(Utils.getRandom(800),Utils.getRandom(800));
-                    break;
-                }
-                case T:
-                {
-                    bd.test();
+                    flock.setRandomVel();
                     break;
                 }
             }
         });
         update = new Timeline(new KeyFrame(Duration.millis(16), e -> {
             //60 fps
-            System.out.println("loop test");
-
+            //System.out.println("loop test");
+            for (Boid boid : Flock.boids)
+            {
+                boid.update();
+            }
         }));
         update.setCycleCount(Timeline.INDEFINITE);
         update.setRate(1);
@@ -75,7 +77,7 @@ public class Main extends Application
         //
         stage.setTitle(title);
         stage.setResizable(false);
-        stage.setScene(new Scene(root, width - 10, height - 10,backcolor));
+        stage.setScene(new Scene(root, width - 10, height - 10, backcolor));
         stage.show();
         root.requestFocus();
     }
