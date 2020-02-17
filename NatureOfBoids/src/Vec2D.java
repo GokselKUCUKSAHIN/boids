@@ -91,8 +91,9 @@ public class Vec2D
     public void setMagnitude(double value)
     {
         this.normalize();
-        this.multiply(value);
+        this.getMultiplied(value);
     }
+
     public void setLimit(double limit)
     {
         if (this.getMagnitude() > limit)

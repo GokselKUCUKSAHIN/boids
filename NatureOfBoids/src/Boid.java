@@ -16,11 +16,11 @@ public class Boid extends Group
     private static final double PERCEPTION_RADIUS_SQ = PERCEPTION_RADIUS * PERCEPTION_RADIUS;
 
     // VECTORS
-    Vec2D pos = new Vec2D(Utils.getRandom(Main.width), Utils.getRandom(Main.height));
-    Vec2D vel = Vec2D.random2D().multiply(Utils.getRandom(0.5, 1.5));
-    Vec2D acc = new Vec2D();
-    DoubleProperty angle = new SimpleDoubleProperty();
-    double maxSpeed = 0.4;
+    private Vec2D pos = new Vec2D(Utils.getRandom(Main.width), Utils.getRandom(Main.height));
+    private Vec2D vel = Vec2D.random2D().multiply(Utils.getRandom(0.5, 1.5));
+    private Vec2D acc = new Vec2D();
+    private DoubleProperty angle = new SimpleDoubleProperty();
+    private double maxSpeed = 3;
 
     public Boid()
     {
@@ -38,12 +38,11 @@ public class Boid extends Group
             // And calculate average Vector.
             for (Boid other : boids)
             {
+                // Arithmetic Mean
                 steering.add(other.vel);
             }
             steering.divide(boids.length);
-            //steering.setMagnitude(maxSpeed);
-            steering.subtract(this.vel);
-            steering.setLimit(2);
+            steering.subtract(this.vel).divide(7);
             this.acc = steering;
         }
     }
@@ -75,12 +74,15 @@ public class Boid extends Group
         //
         pos.add(vel);
         vel.add(acc);
-        vel.setMagnitude(5);
+        vel.setMagnitude(maxSpeed);
         stayInStage(Main.width, Main.height);
     }
 
     private void draw()
     {
+        // FIELD OF VIEW
+
+
 
         // TRIANGLE
         Polygon triangle = new Polygon(new double[]{0, -30, -11, 0, 11, 0});
