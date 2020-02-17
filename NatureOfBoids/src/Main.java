@@ -62,7 +62,7 @@ public class Main extends Application
                 }
             }
         });
-        update = new Timeline(new KeyFrame(Duration.millis(16), e -> {
+        update = new Timeline(new KeyFrame(Duration.millis(32), e -> {
             //60 fps
             //System.out.println("loop test");
             for (Boid boid : Flock.boids)

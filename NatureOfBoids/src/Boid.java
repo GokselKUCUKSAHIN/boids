@@ -7,24 +7,24 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.StrokeType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Boid extends Group
 {
 
-    private static final double PERCEPTION_RADIUS = 100;
+    private static final double PERCEPTION_RADIUS = 50;
     private static final double PERCEPTION_RADIUS_SQ = PERCEPTION_RADIUS * PERCEPTION_RADIUS;
 
     // VECTORS
-    Vec2D pos = new Vec2D(400, 400);
+    Vec2D pos = new Vec2D(Utils.getRandom(Main.width), Utils.getRandom(Main.height));
     Vec2D vel = Vec2D.random2D().multiply(Utils.getRandom(0.5, 1.5));
     Vec2D acc = new Vec2D();
     DoubleProperty angle = new SimpleDoubleProperty();
+    double maxSpeed = 0.4;
 
     public Boid()
     {
         this.rotateProperty().bind(angle);
-
-
         draw();
     }
 
@@ -34,14 +34,17 @@ public class Boid extends Group
         if (boids.length != 0)
         {
             // Create new Vector.
-            Vec2D avg = new Vec2D();
+            Vec2D steering = new Vec2D();
             // And calculate average Vector.
             for (Boid other : boids)
             {
-                avg.add(other.vel);
+                steering.add(other.vel);
             }
-            avg.divide(boids.length);
-            //this.vel = avg;
+            steering.divide(boids.length);
+            //steering.setMagnitude(maxSpeed);
+            steering.subtract(this.vel);
+            steering.setLimit(2);
+            this.acc = steering;
         }
     }
 
@@ -66,10 +69,13 @@ public class Boid extends Group
     public void update()
     {
         align(getFlockmates());
+        //System.out.println(Arrays.toString(acc.getComponents()));
+        angle.set(0);
         angle.set(360 - (vel.getAngleDegree() - 90));
         //
         pos.add(vel);
         vel.add(acc);
+        vel.setMagnitude(5);
         stayInStage(Main.width, Main.height);
     }
 

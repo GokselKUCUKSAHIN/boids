@@ -88,6 +88,19 @@ public class Vec2D
         this.y.set(y.get() / magnitude);
     }
 
+    public void setMagnitude(double value)
+    {
+        this.normalize();
+        this.multiply(value);
+    }
+    public void setLimit(double limit)
+    {
+        if (this.getMagnitude() > limit)
+        {
+            setMagnitude(limit);
+        }
+    }
+
     /**
      * Performs create new vector normalized version of this
      *

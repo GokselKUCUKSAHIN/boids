@@ -51,6 +51,7 @@ public class Utils
         return random.nextInt(end - start) + start;
     }
 
+
     static Point2D endPoint(Point2D point, double angle, double size)
     {
         return endPoint(point.getX(), point.getY(), angle, size);
