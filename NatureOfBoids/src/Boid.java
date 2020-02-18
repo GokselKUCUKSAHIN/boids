@@ -1,10 +1,9 @@
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.StrokeType;
+import javafx.scene.shape.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +18,13 @@ public class Boid extends Group
     private Vec2D pos = new Vec2D(Utils.getRandom(Main.width), Utils.getRandom(Main.height));
     private Vec2D vel = Vec2D.random2D().multiply(Utils.getRandom(0.5, 1.5));
     private Vec2D acc = new Vec2D();
+
+    // PROPERTIES
     private DoubleProperty angle = new SimpleDoubleProperty();
     private double maxSpeed = 3;
+
+    // EXTRAS
+    public Group fov = new Group();
 
     public Boid()
     {
@@ -81,9 +85,15 @@ public class Boid extends Group
     private void draw()
     {
         // FIELD OF VIEW
-
-
-
+        Circle circle = new Circle(0, 0, PERCEPTION_RADIUS, Color.color(1, 1, 0.0, 0.3));
+        //Arc circle = new Arc(0,0,PERCEPTION_RADIUS, PERCEPTION_RADIUS,315,270);
+        //circle.setFill(Color.color(1,1,0,0.1));
+        //circle.setType(ArcType.ROUND);
+        circle.setStrokeWidth(1.2);
+        circle.setStroke(Color.GRAY);
+        this.fov.getChildren().add(circle);
+        this.fov.layoutXProperty().bind(pos.x);
+        this.fov.layoutYProperty().bind(pos.y);
         // TRIANGLE
         Polygon triangle = new Polygon(new double[]{0, -30, -11, 0, 11, 0});
         triangle.setFill(Color.color(0.76, 0.76, 0.76));
@@ -102,7 +112,7 @@ public class Boid extends Group
 
     private void stayInStage(double width, double height)
     {
-        double tolerance = 55;
+        double tolerance = 35;
         // X
         if (this.pos.x.get() > width + tolerance)
         {

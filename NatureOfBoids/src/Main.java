@@ -29,6 +29,7 @@ public class Main extends Application
         child = root.getChildren();
         //
         Flock flock = new Flock();
+        // BODY
         for (Boid boid : Flock.boids)
         {
             child.add(boid);
@@ -58,6 +59,16 @@ public class Main extends Application
                 case F4:
                 {
                     flock.setRandomVel();
+                    break;
+                }
+                case S:
+                {
+                    Flock.showFOV();
+                    break;
+                }
+                case H:
+                {
+                    Flock.hideFOV();
                     break;
                 }
             }
