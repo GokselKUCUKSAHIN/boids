@@ -6,12 +6,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Boid extends Group
 {
 
-    private static final double PERCEPTION_RADIUS = 50;
+    private static final double PERCEPTION_RADIUS = 150;
     private static final double PERCEPTION_RADIUS_SQ = PERCEPTION_RADIUS * PERCEPTION_RADIUS;
 
     // VECTORS
@@ -32,13 +31,13 @@ public class Boid extends Group
         draw();
     }
 
-    private void align(Boid[] boids)
+    private Vec2D align(Boid[] boids)
     {
+        // Create new Vector.
+        Vec2D steering = new Vec2D();
         // if boids array not null
         if (boids.length != 0)
         {
-            // Create new Vector.
-            Vec2D steering = new Vec2D();
             // And calculate average Vector.
             for (Boid other : boids)
             {
@@ -47,8 +46,31 @@ public class Boid extends Group
             }
             steering.divide(boids.length);
             steering.subtract(this.vel).divide(7);
-            this.acc = steering;
+            //this.acc = steering;
         }
+        return steering;
+    }
+
+    private Vec2D cohesion(Boid[] boids)
+    {
+        // Create new Vector.
+        Vec2D steering = new Vec2D();
+        // if boids array not null
+        if (boids.length != 0)
+        {
+            // And calculate average Vector.
+            for (Boid other : boids)
+            {
+                // Arithmetic Mean
+                steering.add(other.pos);
+            }
+            steering.divide(boids.length);
+            steering.subtract(this.pos);
+            steering.setMagnitude(2.1);
+            steering.subtract(this.vel).divide(7);
+            //this.acc = steering;
+        }
+        return steering;
     }
 
     private Boid[] getFlockmates()
@@ -61,8 +83,13 @@ public class Boid extends Group
             double distSq = this.pos.distanceSq(flockmate.pos);
             if (flockmate != this && distSq <= PERCEPTION_RADIUS_SQ)
             {
-                // Add list named flockmates
-                flockmates.add(flockmate);
+                // Check for angles to FOV
+                //double difAngle = this.pos.getAngle() - flockmate.get
+                //if(difAngle )
+                //{
+                    // Add list named flockmates
+                    flockmates.add(flockmate);
+                //}
             }
         }
         // and Return as Static Array :)
@@ -71,13 +98,18 @@ public class Boid extends Group
 
     public void update()
     {
-        align(getFlockmates());
+        Boid[] flockMates = getFlockmates();
+        Vec2D alignForce = align(flockMates);
+        Vec2D cohesionForce = cohesion(flockMates);
+        //this.acc.add(alignForce);
+        this.acc.add(cohesionForce);
         //System.out.println(Arrays.toString(acc.getComponents()));
         angle.set(0);
         angle.set(360 - (vel.getAngleDegree() - 90));
         //
         pos.add(vel);
         vel.add(acc);
+        this.acc.setZero();
         vel.setMagnitude(maxSpeed);
         stayInStage(Main.width, Main.height);
     }
