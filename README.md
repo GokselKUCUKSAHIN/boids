@@ -7,3 +7,6 @@
 
 # Alignment
 ![image](https://user-images.githubusercontent.com/33639948/74691744-1470de00-51f5-11ea-928b-5f5eb4c8b905.png)
+
+# Cohesion
+![Ekran Resmi 2020-02-20 19 14 49](https://user-images.githubusercontent.com/33639948/74955366-9dfef680-5415-11ea-9dbf-6511172b35f5.png)
