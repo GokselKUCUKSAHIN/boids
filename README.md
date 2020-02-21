@@ -10,3 +10,7 @@
 
 # Cohesion
 ![Ekran Resmi 2020-02-20 19 14 49](https://user-images.githubusercontent.com/33639948/74955366-9dfef680-5415-11ea-9dbf-6511172b35f5.png)
+
+# Seperation
+![image](https://user-images.githubusercontent.com/33639948/75068068-7edc9380-54ff-11ea-8828-a7d698e661ca.png)
+
