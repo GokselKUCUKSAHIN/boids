@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Boid extends Group
 {
 
-    private static final double PERCEPTION_RADIUS = 150;
+    private static final double PERCEPTION_RADIUS = 50;
     private static final double PERCEPTION_RADIUS_SQ = PERCEPTION_RADIUS * PERCEPTION_RADIUS;
 
     // VECTORS
@@ -20,7 +20,7 @@ public class Boid extends Group
 
     // PROPERTIES
     private DoubleProperty angle = new SimpleDoubleProperty();
-    private double maxSpeed = 3;
+    private double maxSpeed = 3.1;
 
     // EXTRAS
     public Group fov = new Group();
@@ -45,7 +45,7 @@ public class Boid extends Group
                 steering.add(other.vel);
             }
             steering.divide(boids.length);
-            steering.subtract(this.vel).divide(7);
+            steering.subtract(this.vel).divide(11); //7
             //this.acc = steering;
         }
         return steering;
@@ -66,9 +66,32 @@ public class Boid extends Group
             }
             steering.divide(boids.length);
             steering.subtract(this.pos);
-            steering.setMagnitude(2.1);
-            steering.subtract(this.vel).divide(7);
+            steering.setMagnitude(1.7);
+            steering.subtract(this.vel).divide(11);
             //this.acc = steering;
+        }
+        return steering;
+    }
+
+    private Vec2D seperation(Boid[] boids)
+    {
+        // Create new Vector.
+        Vec2D steering = new Vec2D();
+
+        // if boids array not null
+        if (boids.length != 0)
+        {
+            // And calculate average Vector.
+            for (Boid other : boids)
+            {
+                // Arithmetic Mean
+                Vec2D diff = Vec2D.subtract(this.pos, other.pos);
+                diff.divide(this.pos.distance(other.pos)); //slow code
+                steering.add(diff);
+            }
+            steering.divide(boids.length);
+            steering.multiply(6);
+            steering.subtract(this.vel).divide(11);
         }
         return steering;
     }
@@ -87,8 +110,8 @@ public class Boid extends Group
                 //double difAngle = this.pos.getAngle() - flockmate.get
                 //if(difAngle )
                 //{
-                    // Add list named flockmates
-                    flockmates.add(flockmate);
+                // Add list named flockmates
+                flockmates.add(flockmate);
                 //}
             }
         }
@@ -101,8 +124,10 @@ public class Boid extends Group
         Boid[] flockMates = getFlockmates();
         Vec2D alignForce = align(flockMates);
         Vec2D cohesionForce = cohesion(flockMates);
-        //this.acc.add(alignForce);
+        Vec2D seperationForce = seperation(flockMates);
+        this.acc.add(alignForce);
         this.acc.add(cohesionForce);
+        this.acc.add(seperationForce);
         //System.out.println(Arrays.toString(acc.getComponents()));
         angle.set(0);
         angle.set(360 - (vel.getAngleDegree() - 90));

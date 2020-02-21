@@ -91,7 +91,7 @@ public class Vec2D
     public void setMagnitude(double value)
     {
         this.normalize();
-        this.getMultiplied(value);
+        this.multiply(value);
     }
 
     public void setLimit(double limit)
@@ -210,7 +210,10 @@ public class Vec2D
 
     public Vec2D multiply(double mx, double my)
     {
-        return new Vec2D(mx * this.x.get(), my * this.y.get());
+        this.x.set(this.x.get() * mx);
+        this.y.set(this.y.get() * my);
+        return this;
+        //return new Vec2D(mx * this.x.get(), my * this.y.get());
     }
 
     public Vec2D multiply(double multiplier)
@@ -232,7 +235,7 @@ public class Vec2D
     {
         return new Vec2D(v1.x.get() * v2.x.get(), v1.y.get() * v2.y.get());
     }
-
+/*
     public void getMultiplied(double mx, double my)
     {
         this.x.set(this.x.get() * mx);
@@ -243,6 +246,7 @@ public class Vec2D
     {
         getMultiplied(multiplier, multiplier);
     }
+*/
 
     public double absX()
     {
