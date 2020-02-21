@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Boid extends Group
 {
 
-    private static final double PERCEPTION_RADIUS = 50;
+    private static final double PERCEPTION_RADIUS = 75;
     private static final double PERCEPTION_RADIUS_SQ = PERCEPTION_RADIUS * PERCEPTION_RADIUS;
 
     // VECTORS
@@ -45,7 +45,8 @@ public class Boid extends Group
                 steering.add(other.vel);
             }
             steering.divide(boids.length);
-            steering.subtract(this.vel).divide(11); //7
+            steering.setMagnitude(1.6); // new line remove if isnt work properly
+            steering.subtract(this.vel).divide(7); //7
             //this.acc = steering;
         }
         return steering;
@@ -66,8 +67,8 @@ public class Boid extends Group
             }
             steering.divide(boids.length);
             steering.subtract(this.pos);
-            steering.setMagnitude(1.7);
-            steering.subtract(this.vel).divide(11);
+            steering.setMagnitude(0.5);
+            steering.subtract(this.vel).divide(7);
             //this.acc = steering;
         }
         return steering;
@@ -77,21 +78,28 @@ public class Boid extends Group
     {
         // Create new Vector.
         Vec2D steering = new Vec2D();
-
+        int count = 0;
         // if boids array not null
         if (boids.length != 0)
         {
-            // And calculate average Vector.
-            for (Boid other : boids)
+            for (int i = 0; i < boids.length; i++)
             {
-                // Arithmetic Mean
-                Vec2D diff = Vec2D.subtract(this.pos, other.pos);
-                diff.divide(this.pos.distance(other.pos)); //slow code
-                steering.add(diff);
+                double dist = boids[i].pos.distanceSq(this.pos);
+                if (dist <= PERCEPTION_RADIUS_SQ * 0.14)
+                {
+                    // Feasiable Area
+                    Vec2D diff = Vec2D.subtract(this.pos, boids[i].pos);
+                    diff.divide(Math.sqrt(dist)); // Fast code :)
+                    steering.add(diff);
+                    count++;
+                }
             }
-            steering.divide(boids.length);
-            steering.multiply(6);
-            steering.subtract(this.vel).divide(11);
+            if(count != 0)
+            {
+                steering.divide(count);
+                steering.setMagnitude(2);
+                steering.subtract(this.vel).divide(7);
+            }
         }
         return steering;
     }
