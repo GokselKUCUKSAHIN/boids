@@ -1,16 +1,15 @@
 # Boids
 *Boids implementation.
-![image](https://user-images.githubusercontent.com/33639948/74019812-4ab68e00-49a9-11ea-9484-5e1f40c6a6e4.png)
 
-## Window warp and 100 Boids
-![image](https://user-images.githubusercontent.com/33639948/74596971-de522380-5067-11ea-9cc2-814677896f8e.png)
+![flock1](https://user-images.githubusercontent.com/33639948/75099945-8459dc80-55d8-11ea-90bf-254742a4e43b.png)
+![flock2](https://user-images.githubusercontent.com/33639948/75099943-82901900-55d8-11ea-8113-5af4521d9b70.png)
+![flock3](https://user-images.githubusercontent.com/33639948/75099944-83c14600-55d8-11ea-959d-e247bbd00883.png)
 
 # Alignment
-![image](https://user-images.githubusercontent.com/33639948/74691744-1470de00-51f5-11ea-928b-5f5eb4c8b905.png)
+![Align](https://user-images.githubusercontent.com/33639948/75099946-84f27300-55d8-11ea-9557-ac9912d9e5c4.png)
 
 # Cohesion
-![Ekran Resmi 2020-02-20 19 14 49](https://user-images.githubusercontent.com/33639948/74955366-9dfef680-5415-11ea-9dbf-6511172b35f5.png)
+![Cohesion](https://user-images.githubusercontent.com/33639948/75099947-858b0980-55d8-11ea-9e40-91bd21aa936d.png)
 
 # Seperation
-![image](https://user-images.githubusercontent.com/33639948/75068068-7edc9380-54ff-11ea-8828-a7d698e661ca.png)
-
+![Seperation](https://user-images.githubusercontent.com/33639948/75099937-799f4780-55d8-11ea-884f-37304f549518.png)
