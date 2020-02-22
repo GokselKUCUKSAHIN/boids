@@ -45,7 +45,7 @@ public class Boid extends Group
                 steering.add(other.vel);
             }
             steering.divide(boids.length);
-            steering.setMagnitude(1.6); // new line remove if isnt work properly
+            steering.setMagnitude(2); // new line remove if isnt work properly
             steering.subtract(this.vel).divide(7); //7
             //this.acc = steering;
         }
@@ -98,7 +98,7 @@ public class Boid extends Group
             {
                 steering.divide(count);
                 steering.setMagnitude(2);
-                steering.subtract(this.vel).divide(7);
+                steering.subtract(this.vel).divide(5);
             }
         }
         return steering;
