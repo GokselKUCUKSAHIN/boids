@@ -67,7 +67,7 @@ public class Boid extends Group
             }
             steering.divide(boids.length);
             steering.subtract(this.pos);
-            steering.setMagnitude(0.5);
+            steering.setMagnitude(2);
             steering.subtract(this.vel).divide(7);
             //this.acc = steering;
         }
@@ -85,7 +85,7 @@ public class Boid extends Group
             for (int i = 0; i < boids.length; i++)
             {
                 double dist = boids[i].pos.distanceSq(this.pos);
-                if (dist <= PERCEPTION_RADIUS_SQ * 0.14)
+                if (dist <= PERCEPTION_RADIUS_SQ * 0.14) //14
                 {
                     // Feasiable Area
                     Vec2D diff = Vec2D.subtract(this.pos, boids[i].pos);
@@ -94,7 +94,22 @@ public class Boid extends Group
                     count++;
                 }
             }
-            if(count != 0)
+            // Barrier Check
+            for (int i = 0; i < boids.length; i++)
+            {
+                for (Barrier barrier : Barrier.barriers)
+                {
+                    double dist = boids[i].pos.distance(barrier.pos);
+                    if (dist <= barrier.radius * 1.5)
+                    {
+                        Vec2D diff = Vec2D.subtract(boids[i].pos, barrier.pos);
+                        diff.divide(dist / 2);
+                        steering.add(diff);
+                        count++;
+                    }
+                }
+            }
+            if (count != 0)
             {
                 steering.divide(count);
                 steering.setMagnitude(2);
@@ -198,6 +213,15 @@ public class Boid extends Group
         {
             // Teleport to Down Side
             this.pos.y.set(height + tolerance);
+        }
+
+        // RECALL
+
+        if (this.pos.x.get() < -2 * tolerance || this.pos.x.get() > width + 2 * tolerance
+                || this.pos.y.get() < -2 * tolerance || this.pos.y.get() > height + 2 * tolerance)
+        {
+            this.pos.x.set(0);
+            this.pos.y.set(1);
         }
     }
     //

@@ -27,12 +27,25 @@ public class Main extends Application
     {
         Pane root = new Pane();
         child = root.getChildren();
+
+        for (int i = 0; i < 5; i++)
+        {
+            new Barrier();
+        }
         //
         Flock flock = new Flock();
         // BODY
         for (Boid boid : Flock.boids)
         {
             child.add(boid);
+        }
+
+        for(Barrier barrier: Barrier.barriers)
+        {
+            child.add(barrier);
+            barrier.setOnMouseDragged(e->{
+                barrier.reposition(e.getSceneX(),e.getSceneY());
+            });
         }
         //
         root.setOnKeyPressed(e -> {

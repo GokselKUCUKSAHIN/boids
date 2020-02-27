@@ -7,7 +7,7 @@ public class Flock
     //
     public Flock()
     {
-        for (int i = 0; i < 200; i++)
+        for (int i = 0; i < 200; i++) // default 200
         {
             boids.add(new Boid());
         }
