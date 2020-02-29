@@ -13,3 +13,9 @@
 
 # Seperation
 ![Seperation](https://user-images.githubusercontent.com/33639948/75099937-799f4780-55d8-11ea-884f-37304f549518.png)
+
+
+## Avoiding Barriers
+
+![Ekran Resmi 2020-02-29 23 04 27](https://user-images.githubusercontent.com/33639948/75614268-0a7da200-5b48-11ea-90e5-7e7bc7562862.png)
+![Ekran Resmi 2020-02-29 23 04 47](https://user-images.githubusercontent.com/33639948/75614271-0ea9bf80-5b48-11ea-8f23-34b19e3ea1c7.png)
